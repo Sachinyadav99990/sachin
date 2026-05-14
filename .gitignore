@@ -1,0 +1,7 @@
+$RECYCLE.BIN/
+System Volume Information/
+New folder/
+arpit.major.pdf
+node_modules/
+**/node_modules/
+**/.vscode/
