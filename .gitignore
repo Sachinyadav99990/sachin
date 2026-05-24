@@ -1,7 +1,7 @@
-$RECYCLE.BIN/
-System Volume Information/
-New folder/
-arpit.major.pdf
 node_modules/
-**/node_modules/
-**/.vscode/
+playwright-report/
+test-results/
+.venv/
+.vscode/
+.DS_Store
+npm-debug.log*

@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+      name="description"
+      content="DecisionMirror is a private decision intelligence workspace for detecting cognitive bias, comparing options, and coaching better choices.">
+    <meta name="author" content="Minor Project">
+    <title>DecisionMirror | Explainable Decision Intelligence</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Primary navigation">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">
+            <span class="brand-orbit"></span>
+            <span>DM</span>
+          </span>
+          <div>
+            <strong>DecisionMirror</strong>
+            <span>Explainable decision intelligence</span>
+          </div>
+        </div>
+
+        <nav class="nav-list" aria-label="Workspace views">
+          <button class="nav-item is-active" type="button" data-view="dashboard" aria-current="page">
+            <span class="nav-icon" aria-hidden="true">D</span>
+            Dashboard
+          </button>
+          <button class="nav-item" type="button" data-view="simulator">
+            <span class="nav-icon" aria-hidden="true">S</span>
+            Simulator
+          </button>
+          <button class="nav-item" type="button" data-view="comparator">
+            <span class="nav-icon" aria-hidden="true">C</span>
+            Comparator
+          </button>
+          <button class="nav-item" type="button" data-view="coach">
+            <span class="nav-icon" aria-hidden="true">Q</span>
+            Coach
+          </button>
+        </nav>
+
+        <section class="status-panel" aria-label="System status">
+          <div class="status-dot" aria-hidden="true"></div>
+          <div>
+            <strong>Private mode</strong>
+            <span>No account required. Analysis stays in this browser.</span>
+          </div>
+        </section>
+      </aside>
+
+      <main id="main" class="workspace" tabindex="-1">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Decision workspace</p>
+            <h1>Make decisions you can explain later.</h1>
+            <p class="hero-copy">A professional bias-aware workspace for simulating hard choices, comparing tradeoffs, and creating an evidence trail before you commit.</p>
+          </div>
+          <div class="topbar-actions">
+            <button class="icon-button" type="button" id="themeToggle" aria-label="Toggle light and dark theme" title="Toggle theme">
+              <span class="theme-glyph" aria-hidden="true"></span>
+            </button>
+            <button class="button button-secondary" type="button" id="clearData">Clear sample data</button>
+          </div>
+        </header>
+
+        <section class="view is-active" id="dashboard" aria-labelledby="dashboard-title">
+          <div class="trust-strip" aria-label="Product highlights">
+            <span>Client-side analysis</span>
+            <span>Explainable scoring</span>
+            <span>Bias watchlist</span>
+            <span>Decision history</span>
+          </div>
+
+          <div class="view-heading">
+            <div>
+              <p class="eyebrow">Overview</p>
+              <h2 id="dashboard-title">Decision health dashboard</h2>
+            </div>
+            <button class="button" type="button" data-view="simulator">Analyze a decision</button>
+          </div>
+
+          <div class="metric-grid" aria-label="Decision metrics">
+            <article class="metric-card">
+              <span>Average clarity</span>
+              <strong id="clarityMetric" data-count-to="82">82%</strong>
+              <div class="meter" aria-hidden="true"><span style="width: 82%"></span></div>
+            </article>
+            <article class="metric-card">
+              <span>Bias risk</span>
+              <strong id="riskMetric" data-count-to="31">31%</strong>
+              <div class="meter risk" aria-hidden="true"><span style="width: 31%"></span></div>
+            </article>
+            <article class="metric-card">
+              <span>Tracked choices</span>
+              <strong id="trackedMetric" data-count-to="4">4</strong>
+              <div class="meter neutral" aria-hidden="true"><span style="width: 48%"></span></div>
+            </article>
+            <article class="metric-card">
+              <span>Next review</span>
+              <strong id="nextReviewMetric">Friday</strong>
+              <div class="meter amber" aria-hidden="true"><span style="width: 64%"></span></div>
+            </article>
+          </div>
+
+          <div class="dashboard-grid">
+            <section class="panel decision-map" aria-labelledby="map-title">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Signal map</p>
+                  <h3 id="map-title">Clarity vs. pressure</h3>
+                </div>
+              </div>
+              <div class="map-visual" role="img" aria-label="Scatter plot showing recent decisions by clarity and pressure">
+                <span class="axis axis-x">Pressure</span>
+                <span class="axis axis-y">Clarity</span>
+                <button class="plot-point point-a" type="button" data-insight="Career move: high clarity and manageable pressure." aria-label="Career move insight"></button>
+                <button class="plot-point point-b" type="button" data-insight="Budget choice: moderate clarity with rising pressure." aria-label="Budget choice insight"></button>
+                <button class="plot-point point-c" type="button" data-insight="Hiring decision: strong clarity, but keep checking anchoring." aria-label="Hiring decision insight"></button>
+                <button class="plot-point point-d" type="button" data-insight="Product launch: pressure is high; validate before committing." aria-label="Product launch insight"></button>
+                <span class="map-tooltip" id="mapTooltip">Click a signal point</span>
+              </div>
+            </section>
+
+            <section class="panel" aria-labelledby="bias-title">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Bias watchlist</p>
+                  <h3 id="bias-title">Most frequent patterns</h3>
+                </div>
+              </div>
+              <div class="bias-list" id="biasList"></div>
+            </section>
+
+            <section class="panel insight-panel" aria-labelledby="insight-title">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Live guidance</p>
+                  <h3 id="insight-title">Decision operating system</h3>
+                </div>
+              </div>
+              <div class="insight-grid">
+                <article>
+                  <span class="tag">Before deciding</span>
+                  <p>State what would change your mind, then collect that evidence first.</p>
+                </article>
+                <article>
+                  <span class="tag">After deciding</span>
+                  <p>Save the reason, review the result, and improve your next decision loop.</p>
+                </article>
+              </div>
+            </section>
+
+            <section class="panel wide" aria-labelledby="recent-title">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Recent work</p>
+                  <h3 id="recent-title">Decision log</h3>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th scope="col">Decision</th>
+                      <th scope="col">Top bias</th>
+                      <th scope="col">Risk</th>
+                      <th scope="col">Next step</th>
+                      <th scope="col">Added</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="decisionRows"></tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="simulator" aria-labelledby="simulator-title">
+          <div class="view-heading">
+            <div>
+              <p class="eyebrow">Simulator</p>
+              <h2 id="simulator-title">Detect hidden decision bias</h2>
+            </div>
+          </div>
+
+          <div class="tool-grid">
+            <form class="panel form-panel" id="simulatorForm">
+              <div class="form-intro">
+                <span class="tag" id="draftStatus">Draft autosaved</span>
+                <p>Work through the decision in stages. DecisionMirror saves your draft locally while it checks readiness and bias signals.</p>
+              </div>
+              <div class="form-row">
+                <button class="button button-secondary" type="button" id="loadSimulatorSample">Load sample decision</button>
+                <button class="button button-secondary" type="button" id="resetSimulator">Reset analysis</button>
+              </div>
+
+              <ol class="stepper" aria-label="Simulator progress">
+                <li><button class="is-active" type="button" data-step-indicator="0" aria-current="step">Decision</button></li>
+                <li><button type="button" data-step-indicator="1">Options</button></li>
+                <li><button type="button" data-step-indicator="2">Evidence</button></li>
+                <li><button type="button" data-step-indicator="3">Review</button></li>
+              </ol>
+
+              <section class="form-step is-active" data-step="0" aria-labelledby="step-decision">
+                <h3 id="step-decision">Decision frame</h3>
+                <label for="decisionTitle">Decision title</label>
+                <input id="decisionTitle" name="decisionTitle" type="text" placeholder="Should I accept the new role?" required>
+                <p class="field-error" data-error-for="decisionTitle"></p>
+
+                <label for="decisionContext">Context</label>
+                <textarea id="decisionContext" name="decisionContext" rows="6" placeholder="Describe the choice, options, worries, and constraints." required></textarea>
+                <p class="field-error" data-error-for="decisionContext"></p>
+
+                <div class="form-row">
+                  <div>
+                    <label for="stakes">Stakes</label>
+                    <select id="stakes" name="stakes">
+                      <option value="medium">Medium</option>
+                      <option value="low">Low</option>
+                      <option value="high">High</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="timeline">Timeline</label>
+                    <select id="timeline" name="timeline">
+                      <option value="soon">This week</option>
+                      <option value="today">Today</option>
+                      <option value="later">Later</option>
+                    </select>
+                  </div>
+                </div>
+              </section>
+
+              <section class="form-step" data-step="1" aria-labelledby="step-options">
+                <h3 id="step-options">Options and outcomes</h3>
+                <label for="primaryGoal">Primary goal</label>
+                <input id="primaryGoal" name="primaryGoal" type="text" placeholder="Maximize learning without burning out">
+                <p class="field-error" data-error-for="primaryGoal"></p>
+
+                <label for="preferredOption">Current preferred option</label>
+                <input id="preferredOption" name="preferredOption" type="text" placeholder="Launch now, wait, delegate, accept, decline...">
+
+                <label for="alternatives">Alternatives considered</label>
+                <textarea id="alternatives" name="alternatives" rows="4" placeholder="List real alternatives, including the boring or reversible ones."></textarea>
+
+                <div class="form-row">
+                  <div>
+                    <label for="bestCase">Best-case outcome</label>
+                    <textarea id="bestCase" name="bestCase" rows="3" placeholder="What success looks like."></textarea>
+                  </div>
+                  <div>
+                    <label for="worstCase">Worst-case outcome</label>
+                    <textarea id="worstCase" name="worstCase" rows="3" placeholder="What failure would cost."></textarea>
+                  </div>
+                </div>
+              </section>
+
+              <section class="form-step" data-step="2" aria-labelledby="step-evidence">
+                <h3 id="step-evidence">Evidence and confidence</h3>
+                <label for="evidenceCollected">Evidence already collected</label>
+                <textarea id="evidenceCollected" name="evidenceCollected" rows="4" placeholder="Facts, interviews, numbers, constraints, prior attempts."></textarea>
+
+                <label for="missingEvidenceInput">Evidence still missing</label>
+                <textarea id="missingEvidenceInput" name="missingEvidenceInput" rows="4" placeholder="What would change your mind or reduce avoidable risk?"></textarea>
+                <p class="field-error" data-error-for="missingEvidenceInput"></p>
+
+                <div class="form-row">
+                  <label>Confidence <span class="range-value" data-range-value="confidence">55%</span><input id="confidence" type="range" min="0" max="100" value="55" name="confidence"></label>
+                  <div>
+                    <label for="reversibility">Reversibility</label>
+                    <select id="reversibility" name="reversibility">
+                      <option value="medium">Partly reversible</option>
+                      <option value="high">Easy to reverse</option>
+                      <option value="low">Hard to reverse</option>
+                    </select>
+                  </div>
+                </div>
+
+                <label for="affectedPeople">Who is affected?</label>
+                <input id="affectedPeople" name="affectedPeople" type="text" placeholder="Customers, team, family, budget owner, future self...">
+              </section>
+
+              <section class="form-step" data-step="3" aria-labelledby="step-review">
+                <h3 id="step-review">Readiness review</h3>
+                <div class="review-preview" id="simulatorPreview" aria-live="polite">
+                  Start with the decision frame to see live readiness guidance.
+                </div>
+              </section>
+
+              <div class="form-row step-actions">
+                <button class="button button-secondary" type="button" id="prevSimulatorStep">Back</button>
+                <button class="button button-secondary" type="button" id="nextSimulatorStep">Next</button>
+              </div>
+              <button class="button" type="submit">Run analysis</button>
+              <p class="form-error" id="simulatorError" role="alert"></p>
+            </form>
+
+            <section class="panel results-panel" aria-live="polite" aria-labelledby="analysis-title">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Analysis</p>
+                  <h3 id="analysis-title">Bias report</h3>
+                </div>
+                <span class="score-pill" id="riskScore">0%</span>
+              </div>
+              <div id="simulatorResult" class="empty-state">
+                Run an analysis to see bias signals, confidence, and the next best question.
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="comparator" aria-labelledby="comparator-title">
+          <div class="view-heading">
+            <div>
+              <p class="eyebrow">Comparator</p>
+              <h2 id="comparator-title">Compare two options with weighted priorities</h2>
+            </div>
+          </div>
+
+          <form class="panel compare-panel" id="compareForm">
+            <div class="compare-columns">
+              <section aria-labelledby="option-a-title">
+                <h3 id="option-a-title">Option A</h3>
+                <label for="optionA">Title</label>
+                <input id="optionA" name="optionA" type="text" placeholder="Stay in current role" required>
+                <label for="optionADesc">Notes</label>
+                <textarea id="optionADesc" name="optionADesc" rows="4" placeholder="What makes this option attractive or risky?" required></textarea>
+              </section>
+
+              <section aria-labelledby="option-b-title">
+                <h3 id="option-b-title">Option B</h3>
+                <label for="optionB">Title</label>
+                <input id="optionB" name="optionB" type="text" placeholder="Take new offer" required>
+                <label for="optionBDesc">Notes</label>
+                <textarea id="optionBDesc" name="optionBDesc" rows="4" placeholder="What makes this option attractive or risky?" required></textarea>
+              </section>
+            </div>
+
+            <div class="slider-grid" aria-label="Priority weights">
+              <label>Impact <span class="range-value" data-range-value="impact">70%</span><input type="range" min="0" max="100" value="70" name="impact"></label>
+              <label>Risk tolerance <span class="range-value" data-range-value="risk">45%</span><input type="range" min="0" max="100" value="45" name="risk"></label>
+              <label>Timeline fit <span class="range-value" data-range-value="timeline">55%</span><input type="range" min="0" max="100" value="55" name="timeline"></label>
+              <label>Values alignment <span class="range-value" data-range-value="alignment">80%</span><input type="range" min="0" max="100" value="80" name="alignment"></label>
+            </div>
+
+            <div class="form-row">
+              <button class="button" type="submit">Compare options</button>
+              <button class="button button-secondary" type="button" id="resetComparison">Reset comparison</button>
+            </div>
+          </form>
+          <div class="compare-help">
+            <p>Scores are generated from your priority weights and option descriptions. Higher values favor more aligned, less risky, and clearer paths.</p>
+          </div>
+
+          <section class="panel result-strip" id="compareResult" aria-live="polite">
+            Add both options, set priorities, and DecisionMirror will score the tradeoff.
+          </section>
+        </section>
+
+        <section class="view" id="coach" aria-labelledby="coach-title">
+          <div class="view-heading">
+            <div>
+              <p class="eyebrow">Coach</p>
+              <h2 id="coach-title">Turn uncertainty into better questions</h2>
+            </div>
+          </div>
+
+          <div class="tool-grid">
+            <form class="panel form-panel" id="coachForm">
+              <label for="coachPrompt">What are you deciding?</label>
+              <textarea id="coachPrompt" name="coachPrompt" rows="8" placeholder="I am deciding whether to launch now or wait for more validation..." required></textarea>
+              <button class="button" type="submit">Generate coaching prompts</button>
+            </form>
+
+            <section class="panel results-panel" id="coachResult" aria-live="polite">
+              <div class="empty-state">Enter a dilemma to receive reframes, missing evidence, and a small next action.</div>
+            </section>
+          </div>
+        </section>
+
+        <footer class="site-footer">
+          <div>
+            <p class="eyebrow">Contact</p>
+            <h2>Built by Minor Project</h2>
+            <p>Connect for collaborations, feedback, or product ideas around decision intelligence.</p>
+          </div>
+          <div class="footer-links" aria-label="Project links">
+            <a href="#dashboard">Dashboard</a>
+            <a href="#simulator">Simulator</a>
+          </div>
+        </footer>
+      </main>
+    </div>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>

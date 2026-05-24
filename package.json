@@ -1,0 +1,11 @@
+{
+  "name": "decisionmirror-publish",
+  "private": true,
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "test": "npx playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.47.0"
+  }
+}
