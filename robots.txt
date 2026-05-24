@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://decisionmirror-publish.vercel.app/sitemap.xml
